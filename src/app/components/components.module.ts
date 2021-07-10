@@ -5,7 +5,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { RouterModule } from '@angular/router';
-
+import { GridComponent } from './grid/grid.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -13,17 +14,20 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    GridComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AgGridModule.withComponents([])
   ],
   exports:[
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    GridComponent
   ]
 })
 export class ComponentsModule { }
