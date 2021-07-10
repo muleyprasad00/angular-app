@@ -8,6 +8,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./dashboard/dashboard.module').then(m => m.DashboardModule),
 	},
+  {
+		path: 'booking',
+		loadChildren: () =>
+			import('./booking/booking.module').then(m => m.BookingModule),
+	},
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full'}
   
 ];

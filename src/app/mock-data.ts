@@ -1,8 +1,9 @@
-export const i18n = {
+export const _i18n = {
     locale: 'en_US',
     translations: {
         "dashboard":"Dashboard",
-        "profile":"Profile"
+        "profile":"Profile",
+        "booking":"Booking"
     }
 }
 
