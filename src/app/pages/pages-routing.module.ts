@@ -13,6 +13,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./booking/booking.module').then(m => m.BookingModule),
 	},
+  {
+		path: 'add-edit',
+		loadChildren: () =>
+			import('./add-edit-form/add-edit-form.module').then(m => m.AddEditFormModule),
+	},
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full'}
   
 ];

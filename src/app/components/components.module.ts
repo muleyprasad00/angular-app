@@ -7,6 +7,9 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { RouterModule } from '@angular/router';
 import { GridComponent } from './grid/grid.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { BtnCellRendererComponent } from './grid/btn-cell-renderer/btn-cell-renderer.component';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,19 +18,23 @@ import { AgGridModule } from 'ag-grid-angular';
     SidebarComponent,
     FooterComponent,
     BreadcrumbComponent,
-    GridComponent
+    GridComponent,
+    BtnCellRendererComponent,
+    DynamicFormComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    ReactiveFormsModule
   ],
   exports:[
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
     BreadcrumbComponent,
-    GridComponent
+    GridComponent,
+    DynamicFormComponent
   ]
 })
 export class ComponentsModule { }

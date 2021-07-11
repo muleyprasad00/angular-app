@@ -1,9 +1,26 @@
-<ag-grid-angular
-    [style.height]="height"
-    class="ag-theme-alpine"
-    [defaultColDef]="defaultColDef"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs"
-    (gridReady)="onGridReady($event)"
-    >
-</ag-grid-angular>
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h6 class="d-inline"> Booking Details</h6> 
+
+            <div class="d-flex justify-content-end">
+                <ng-container *ngFor="let gridBtn of gridButtons">
+                    <button class="btn ml-3" [class]="gridBtn.class" (click)="onGridBtnClick(gridBtn)">
+                         {{gridBtn?.title}}
+                     </button>
+                </ng-container>
+           </div>
+        </div>      
+        <ag-grid-angular
+            [style.height]="height"
+            class="ag-theme-alpine"
+            [defaultColDef]="defaultColDef"
+            [frameworkComponents]="frameworkComponents"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            (gridReady)="onGridReady($event)"
+            >
+        </ag-grid-angular>
+    </div>
+  </div>

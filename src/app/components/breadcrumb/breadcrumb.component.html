@@ -1,4 +1,4 @@
-<h3 class="mt-2">{{pageHeading}}</h3>
-<ol class="breadcrumb">
+
+<ol class="breadcrumb mt-2">
     <li class="breadcrumb-item" *ngFor="let item of breadcrumbList; let i=index" [ngClass]="{ 'active': i === breadcrumbList.length-1 }" ><span href="#">{{item}}</span></li>
 </ol>
