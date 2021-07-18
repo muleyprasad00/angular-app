@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserConfigService } from 'src/app/user-config.service';
 import { _i18n } from '../../mock-data'
 
 @Component({
@@ -8,12 +10,19 @@ import { _i18n } from '../../mock-data'
 })
 export class SidebarComponent implements OnInit {
 
-   i18n:any
-  constructor() { }
+  i18n: any;
+  sidebar: any[] = [];
+  userConfigSub!: Subscription;
+  constructor(private userService: UserConfigService) { }
 
   ngOnInit(): void {
-  this.i18n = _i18n.translations;
-
+    this.userConfigSub = this.userService.userCast.subscribe((userDetails: any) => {
+      if (userDetails.appName) {
+        this.userConfigSub.unsubscribe();
+        this.i18n = userDetails.i18n[0].translations
+        this.sidebar = userDetails.sidebarConfig;
+      }
+    });
   }
 
 }

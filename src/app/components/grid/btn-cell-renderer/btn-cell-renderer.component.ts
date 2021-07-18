@@ -9,14 +9,15 @@ import { ICellRendererParams } from 'ag-grid-community';
 })
 export class BtnCellRendererComponent implements ICellRendererAngularComp , OnInit {
   private params: any;
-  btnText:string = ''
+  btnText:string = '';
+  btnClass:string = ''
   agInit(params: any): void {
     this.params = params;
-    this.btnText = params.btnText
+    this.btnText = params.btnText;
+    this.btnClass = params.btnClass;
   }
 
   btnClickedHandler() {
-    console.log(this.params)
     this.params.clicked(this.params.data.id);
   }
   constructor() { }
