@@ -11,7 +11,7 @@ import { _i18n } from '../../mock-data'
 export class SidebarComponent implements OnInit {
 
   i18n: any;
-  sidebar: {title:string,url:string}[] = [];
+  sidebar: {title:string,url:string,icon:string}[] = [];
   userConfigSub!: Subscription;
   constructor(private userService: UserConfigService) { }
 
