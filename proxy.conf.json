@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "https://muleyprasad00.github.io/jsonapi/mockdata.json",
+      "target": "https://muleyprasad00.github.io/jsonapi/",
       "secure": false,
       "pathRewrite": {
         "^/api": ""
