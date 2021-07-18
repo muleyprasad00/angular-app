@@ -22,8 +22,8 @@ export class GridComponent implements OnInit {
   @Input() title :string = ''
   @Input() i18n:any;
   @Output() GridBtnClickEvent = new EventEmitter<boolean>();
+  @Output() GridReady = new EventEmitter<boolean>();
   
-
   @Input() defaultColDef = {
     resizable: true
   };
@@ -65,7 +65,7 @@ export class GridComponent implements OnInit {
     this.autoSizeAll(this.autoSizeCol)
     if(this.sizeColumnsToFit)
     this.gridApi.sizeColumnsToFit();
-    
+    this.GridReady.emit();
   }
 
   autoSizeAll(skipHeader: any) {

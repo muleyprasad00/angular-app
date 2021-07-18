@@ -1,0 +1,16 @@
+
+<ng-container *ngIf="i18n">
+
+    <div class="row" *ngFor="let element of pageConfig">
+        <div class="col" [ngSwitch]="element.elementType">
+            <div *ngSwitchCase="'breadcrumb'">
+                <app-breadcrumb [breadcrumbList]="element.breadcrumbList"></app-breadcrumb>
+            </div>
+            <div *ngSwitchCase="'grid'">
+                <app-grid [height]="element.height" [i18n]="i18n" [title]="element?.title" [gridButtons]="element.gridButtons"
+                [columns]="element.columns" (GridReady)="fetchData(element.apiUrl,element?.title)" [rowData]="rowData[element?.title]" (GridBtnClickEvent)="onGridBtnClickEvent($event)"></app-grid>
+            </div>
+        </div>
+    </div>
+
+</ng-container>
