@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GridApi, GridReadyEvent } from 'ag-grid-community';
 import { BtnCellRendererComponent } from './btn-cell-renderer/btn-cell-renderer.component';
+import { Columns } from './column';
 
 @Component({
   selector: 'app-grid',
@@ -15,8 +16,9 @@ export class GridComponent implements OnInit {
   @Input() height = '300px';
   @Input() autoSizeCol = true;
   @Input() sizeColumnsToFit = true;
-  @Input() gridButtons:any = []
-  
+  @Input() gridButtons:any = [];
+  @Input() columns:Columns[] = [];
+  @Input() rowData:any = [];
   @Output() GridBtnClickEvent = new EventEmitter<boolean>();
   
 
@@ -24,36 +26,7 @@ export class GridComponent implements OnInit {
     resizable: true
   };
 
-  columnDefs = [
-    { field: 'id' },
-    { field: 'name' },
-    { field: 'from'},
-    { field: 'to' },
-    { field: 'date' },
-    { field: 'vehicleNo'},
-    {
-    field: "action",
-    cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      btnText:"Edit",
-      clicked: function(field: any) {
-        alert(`${field} was clicked`);
-      }
-    },
-  }
-];
-
-rowData = [
-    { id: 'IOP1', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP2', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP3', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP4', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP5', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP6', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP7', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP8', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP9', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' }
-];
+  columnDefs:Columns[] = [];
   frameworkComponents:any;
 
   constructor() {
@@ -63,6 +36,25 @@ rowData = [
   }
 
   ngOnInit(): void {
+
+    this.columns.forEach(col => {
+      const colObj:Columns = {
+        field:col.field,
+        title:col.title
+      };      
+      if(col.type==='action'){
+        colObj.cellRenderer = "btnCellRenderer";        
+        colObj.cellRendererParams =  {
+          btnText:col.buttonDetails?.btnText,
+          btnClass:col.buttonDetails?.btnClass,
+          clicked: function(field: any) {
+            alert(`${field} was clicked`);
+          }
+        }
+      }
+      this.columnDefs.push(colObj)
+    });
+    
   }
 
   onGridReady(params:GridReadyEvent) {

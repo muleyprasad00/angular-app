@@ -68,7 +68,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "tramsport-management:build"
+            "browserTarget": "tramsport-management:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BtnCellRendererComponent } from 'src/app/components/grid/btn-cell-renderer/btn-cell-renderer.component';
+import { Columns } from 'src/app/components/grid/column';
 
 @Component({
   selector: 'app-booking',
@@ -21,22 +22,20 @@ export class BookingComponent implements OnInit {
   ]
 
 
-  columnDefs = [
-    { field: 'id' },
-    { field: 'name' },
-    { field: 'from'},
-    { field: 'to' },
-    { field: 'date' },
-    { field: 'vehicleNo'},
+  columns:Columns[] = [
+    { field: 'id', title:"id" },
+    { field: 'name', title:"name" },
+    { field: 'from', title:"from"},
+    { field: 'to', title:"to" },
+    { field: 'date', title:"date" },
+    { field: 'vehicleNo', title:"vehicleNo"},
     {
-    field: "action",
-    cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      btnText:"Edit",
-      clicked: function(field: any) {
-        alert(`${field} was clicked`);
-      }
-    },
+    field: "action", title:"action",
+    type:'action',
+    buttonDetails:{
+      btnText:"edit",
+      btnClass:"btn-outline-primary"
+    }
   }
 ];
 
@@ -57,9 +56,7 @@ frameworkComponents:any;
   ngOnInit(): void {
   }
 
-  onGridBtnClickEvent(event:any){
-
-    
+  onGridBtnClickEvent(event:any){    
     this.router.navigateByUrl(`/${event.url}`)
   }
 
