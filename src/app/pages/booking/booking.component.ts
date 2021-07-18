@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BtnCellRendererComponent } from 'src/app/components/grid/btn-cell-renderer/btn-cell-renderer.component';
+import { Subscription } from 'rxjs';
 import { Columns } from 'src/app/components/grid/column';
+import { UserConfigService } from 'src/app/user-config.service';
 
 @Component({
   selector: 'app-booking',
@@ -9,51 +11,36 @@ import { Columns } from 'src/app/components/grid/column';
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
-  breadcrumbList = ['Home','Booking'];
-
-  gridButtons = [
-    {
-      title:"Add Booking",
-      action:"navigate",
-      url:"add-edit",
-      class:"btn-sm btn-primary",
-      type:"add"
-    }
-  ]
+  breadcrumbList = [];
+  gridButtons = []
+  columns:Columns[] = [];
+  rowData = [];
+  frameworkComponents:any;
+  i18n: any;
+  bookingConfig:any;
+  userConfigSub$!: Subscription;
 
 
-  columns:Columns[] = [
-    { field: 'id', title:"id" },
-    { field: 'name', title:"name" },
-    { field: 'from', title:"from"},
-    { field: 'to', title:"to" },
-    { field: 'date', title:"date" },
-    { field: 'vehicleNo', title:"vehicleNo"},
-    {
-    field: "action", title:"action",
-    type:'action',
-    buttonDetails:{
-      btnText:"edit",
-      btnClass:"btn-outline-primary"
-    }
-  }
-];
-
-rowData = [
-    { id: 'IOP1', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP2', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP3', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP4', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP5', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP6', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP7', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP8', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' },
-    { id: 'IOP9', name: 'Indian Oil Pvt.Ltd', from: 'Mumbai', to:'Pune', date:'01/07/2021', vehicleNo:'MH12-cc-2200' }
-];
-frameworkComponents:any;
-  constructor(private router:Router) { }
+  constructor(private userService: UserConfigService, private router:Router,private http:HttpClient) { }
 
   ngOnInit(): void {
+    this.userConfigSub$ = this.userService.userCast.subscribe((userDetails: any) => {
+      if (userDetails.appName) {
+        // this.userConfigSub$.unsubscribe();
+        this.i18n = userDetails.i18n[0].translations;
+        this.bookingConfig = userDetails.bookingConfig;
+        this.gridButtons =  this.bookingConfig.gridButtons;
+        this.breadcrumbList = this.bookingConfig.breadcrumbList;
+        this.columns = this.bookingConfig.columns;
+        this.fetchRowData();
+      }
+    });
+  }
+
+  fetchRowData(){
+    this.http.get(`/api/${this.bookingConfig.apiUrl}`).subscribe((res:any)=>{
+      this.rowData = res.result;
+    })
   }
 
   onGridBtnClickEvent(event:any){    

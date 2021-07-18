@@ -19,6 +19,8 @@ export class GridComponent implements OnInit {
   @Input() gridButtons:any = [];
   @Input() columns:Columns[] = [];
   @Input() rowData:any = [];
+  @Input() title :string = ''
+  @Input() i18n:any;
   @Output() GridBtnClickEvent = new EventEmitter<boolean>();
   
 

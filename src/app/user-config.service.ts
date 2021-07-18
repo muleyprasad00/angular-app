@@ -16,18 +16,11 @@ export class UserConfigService {
   constructor(private http:HttpClient) { }
 
   fetchUserDetails(){
-    this.http.get(`/api`).subscribe((data:any)=>{
+    this.http.get(`/api/userConfig.json`).subscribe((data:any)=>{
       this.userDetails = data;
-      this.userConfig.next(cloneDeep(this.userDetails))
+      this.userConfig.next(cloneDeep(this.userDetails));
     })
   }
-  // getUserDetails(){
-  //   return cloneDeep(this.userDetails);
-  // }
-
-  // geti18n(){
-  //   return cloneDeep(this.userDetails.i18n[0]);
-  // }
 
 }
 

@@ -11,7 +11,7 @@ import { _i18n } from '../../mock-data'
 export class SidebarComponent implements OnInit {
 
   i18n: any;
-  sidebar: any[] = [];
+  sidebar: {title:string,url:string}[] = [];
   userConfigSub!: Subscription;
   constructor(private userService: UserConfigService) { }
 
@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
     this.userConfigSub = this.userService.userCast.subscribe((userDetails: any) => {
       if (userDetails.appName) {
         this.userConfigSub.unsubscribe();
-        this.i18n = userDetails.i18n[0].translations
+        this.i18n = userDetails.i18n[0].translations;
         this.sidebar = userDetails.sidebarConfig;
       }
     });
