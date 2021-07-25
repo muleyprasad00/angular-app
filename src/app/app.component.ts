@@ -9,7 +9,6 @@ import { UserConfigService } from './user-config.service';
 export class AppComponent implements OnInit {
   constructor(private userService:UserConfigService){}
   ngOnInit(): void {
-    console.log("app initilize")
     this.userService.fetchUserDetails();
   }
 }

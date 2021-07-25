@@ -56,8 +56,9 @@ export class GridComponent implements OnInit {
       }
       this.columnDefs.push(colObj)
     });
-    
   }
+
+  
 
   onGridReady(params:GridReadyEvent) {
     this.gridApi = params.api;

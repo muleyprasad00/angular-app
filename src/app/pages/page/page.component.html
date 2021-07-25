@@ -7,8 +7,16 @@
                 <app-breadcrumb [breadcrumbList]="element.breadcrumbList"></app-breadcrumb>
             </div>
             <div *ngSwitchCase="'grid'">
-                <app-grid [height]="element.height" [i18n]="i18n" [title]="element?.title" [gridButtons]="element.gridButtons"
-                [columns]="element.columns" (GridReady)="fetchData(element.apiUrl,element?.title)" [rowData]="rowData[element?.title]" (GridBtnClickEvent)="onGridBtnClickEvent($event)"></app-grid>
+                <app-grid
+                    [height]="element.height"
+                    [i18n]="i18n" 
+                    [title]="element?.title" 
+                    [gridButtons]="element.gridButtons"
+                    [columns]="element.columns"
+                    (GridReady)="fetchData(element.apiUrl,element?.title)"
+                    [rowData]="rowData[element?.title]"
+                    (GridBtnClickEvent)="onGridBtnClickEvent($event)"
+                ></app-grid>
             </div>
         </div>
     </div>
