@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { Columns } from 'src/app/components/grid/column';
 import { UserConfigService } from 'src/app/user-config.service';
@@ -26,11 +27,12 @@ export class PageComponent implements OnInit {
     private userService: UserConfigService, 
     private router:Router,
     private http:HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
     ) { }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.pageName = String(params.get('name'));
       if(!this.pageName) return;
@@ -40,14 +42,17 @@ export class PageComponent implements OnInit {
           this.userConfigSub$.unsubscribe();
           this.i18n = userDetails.i18n[0].translations;
           this.pageConfig = userDetails[this.pageName];
+          this.spinner.hide();
         }
       });
     })   
   }
 
   fetchData(apiUrl:string,title:string){
+    this.spinner.show();
     this.http.get(`/api/${apiUrl}`).subscribe((res:any)=>{
-      this.rowData[title] = res.result;
+      this.rowData[title] = res.result;    
+      this.spinner.hide();
     })
   }
 

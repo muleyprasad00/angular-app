@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserConfigService } from './user-config.service';
 
 @Component({
@@ -7,8 +8,9 @@ import { UserConfigService } from './user-config.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private userService:UserConfigService){}
+  constructor(private userService:UserConfigService,private spinner: NgxSpinnerService){}
   ngOnInit(): void {
+    this.spinner.show()
     this.userService.fetchUserDetails();
   }
 }
