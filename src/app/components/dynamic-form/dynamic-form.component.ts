@@ -1,64 +1,5 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, Input, OnInit } from '@angular/core'; 
 import { FormGroup, FormControl,Validators } from '@angular/forms';
-
-const form_template:any = [
-  {
-    "element_type":"textBox",
-    "label":"Name",
-    "name":"name",
-    "class":"col-lg-6",
-    "placeholder":"Name",
-    "type":"text"
-  },
-  {
-    "element_type":"textBox",
-    "label":"Address",
-    "name":"address",
-    "class":"col-lg-6",
-    "placeholder":"Address",
-    "type":"text"
-  },
-  {
-    "element_type":"textBox",
-    "label":"City",
-    "name":"city",
-    "class":"col-lg-4",
-    "placeholder":"City",
-    "type":"text"
-  },
-  {
-    "element_type":"textBox",
-    "label":"State",
-    "name":"state",
-    "class":"col-lg-4",
-    "placeholder":"State",
-    "type":"text"
-  },
-  {
-    "element_type":"textBox",
-    "label":"Country",
-    "name":"country",
-    "class":"col-lg-4",
-    "placeholder":"Country",
-    "type":"text"
-  },
-  {
-    "element_type":"textBox",
-    "label":"Mobile No",
-    "name":"name",
-    "class":"col-lg-4",
-    "placeholder":"Mobile No",
-    "type":"number"
-  },
-  {
-    "element_type":"select",
-    "label":"Favorite Book",
-    "name":"favorite_book",
-    "class":"col-lg-4",
-    "options":["Jane Eyre","Pride and Prejudice","Wuthering Heights"]
-  }
-]
-
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
@@ -67,18 +8,35 @@ const form_template:any = [
 export class DynamicFormComponent implements OnInit {
 
   myFormGroup:any;
+  registerForm: any;
+  submitted = false;
+  @Input() formTemplate:any = []
 
-  formTemplate:any = form_template; 
   constructor() {}    
   ngOnInit() {
     let group:any={}    
-    form_template.forEach((input_template:any)=>{
-      group[input_template.label]=new FormControl('');  
+    this.formTemplate.forEach((element:any)=>{
+      if(element.element_type==='checkbox' && element.requiredTrue){
+        group[element.name] = new FormControl(false,  Validators.requiredTrue);
+      }else{
+        group[element.name] = new FormControl('');
+      }      
     })
     this.myFormGroup = new FormGroup(group);
   }
+
+  // convenience getter for easy access to form fields
+  getFC(fc:any) {
+    return this.myFormGroup.controls[fc]; 
+  }
+
   onSubmit(){
-    console.log(this.myFormGroup.value);
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.myFormGroup.invalid) {
+      return;
+  }
+    alert(JSON.stringify(this.myFormGroup.value))
   }
 
   onCancel(){
