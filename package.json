@@ -25,6 +25,7 @@
     "ag-grid-community": "^25.3.0",
     "bootstrap": "^5.0.2",
     "cors": "^2.8.5",
+    "ngx-spinner": "^11.0.2",
     "rxjs": "~6.6.0",
     "save": "^2.4.0",
     "tslib": "^2.0.0",

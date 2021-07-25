@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { capitalize } from 'lodash';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { UserConfigService } from 'src/app/user-config.service';
 
@@ -17,9 +18,10 @@ export class AddEditFormComponent implements OnInit {
   userConfigSub$!: Subscription;
   pageName:string='';
   constructor(private userService: UserConfigService,private route: ActivatedRoute,
-    private http:HttpClient,) { }
+    private http:HttpClient,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.pageName = String(params.get('name'));
       if(!this.pageName) return;
@@ -37,7 +39,8 @@ export class AddEditFormComponent implements OnInit {
 
   fetchData(){
     this.http.get(`/api/formsConfig.json`).subscribe((res:any)=>{
-     this.formsConfig = res[this.pageName]
+     this.formsConfig = res[this.pageName];
+     this.spinner.hide();
     })
   }
 

@@ -5,7 +5,8 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <router-outlet></router-outlet>
+                    <router-outlet></router-outlet>      
+                    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "rgb(0, 255, 34)" type = "square-loader" [fullScreen] = "true"><p  style="color: rgb(0, 255, 34)" > Loading... </p></ngx-spinner>
                 </div>
             </main>
             <app-footer></app-footer>
