@@ -38,9 +38,17 @@ export class AddEditFormComponent implements OnInit {
   }
 
   fetchData(){
-    this.http.get(`/api/formsConfig.json`).subscribe((res:any)=>{
+    this.http.get(`/config/formsConfig.json`).subscribe((res:any)=>{
      this.formsConfig = res[this.pageName];
      this.spinner.hide();
+    })
+  }
+
+  onSubmit(event:any){
+    this.spinner.show();
+    this.http.post(`/api/${this.pageName}`,event).subscribe(res=>{
+      this.spinner.hide();
+      window.history.back();
     })
   }
 

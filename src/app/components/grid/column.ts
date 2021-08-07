@@ -1,6 +1,7 @@
 export interface Columns {    
     field:string;
     title:string;
+    width?:string;
     type?:string;
     buttonDetails?:{
         btnText:string;

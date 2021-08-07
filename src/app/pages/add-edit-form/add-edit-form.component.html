@@ -1,3 +1,6 @@
 
 <app-breadcrumb  [breadcrumbList]="breadcrumbList"></app-breadcrumb>
-<app-dynamic-form *ngIf="formsConfig" [formTemplate]="formsConfig"></app-dynamic-form>
+<app-dynamic-form *ngIf="formsConfig" 
+[formTemplate]="formsConfig"
+(OnSubmit)="onSubmit($event)"
+></app-dynamic-form>
