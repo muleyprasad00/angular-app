@@ -5,7 +5,7 @@
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <a class="nav-link" *ngFor="let item of sidebar" [routerLink]="[item.url]"  routerLinkActive="active">
                     <div class="sb-nav-link-icon"><i  [class]="item.icon"></i></div>
-                    {{i18n[item.title]}}
+                    {{i18n[item.title] || item.title}}
                 </a>
                 <!-- <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

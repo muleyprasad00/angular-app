@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'; 
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'; 
 import { FormGroup, FormControl,Validators } from '@angular/forms';
 @Component({
   selector: 'app-dynamic-form',
@@ -11,6 +11,7 @@ export class DynamicFormComponent implements OnInit {
   registerForm: any;
   submitted = false;
   @Input() formTemplate:any = []
+  @Output() OnSubmit : EventEmitter<any> = new EventEmitter();
 
   constructor() {}    
   ngOnInit() {
@@ -36,7 +37,8 @@ export class DynamicFormComponent implements OnInit {
     if (this.myFormGroup.invalid) {
       return;
   }
-    alert(JSON.stringify(this.myFormGroup.value))
+    console.log(JSON.stringify(this.myFormGroup.value))
+    this.OnSubmit.emit(this.myFormGroup.value)
   }
 
   onCancel(){

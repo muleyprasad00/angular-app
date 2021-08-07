@@ -16,7 +16,7 @@ export class UserConfigService {
   constructor(private http:HttpClient) { }
 
   fetchUserDetails(){
-    this.http.get(`/api/userConfig.json`).subscribe((data:any)=>{
+    this.http.get(`/config/userConfig.json`).subscribe((data:any)=>{
       this.userDetails = data;
       this.userConfig.next(cloneDeep(this.userDetails));
     })

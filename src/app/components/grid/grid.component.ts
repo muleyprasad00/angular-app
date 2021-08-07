@@ -42,7 +42,8 @@ export class GridComponent implements OnInit {
     this.columns.forEach(col => {
       const colObj:Columns = {
         field:col.field,
-        title:col.title
+        title:this.i18n[col.title] || col.title,
+        width:col.width
       };      
       if(col.type==='action'){
         colObj.cellRenderer = "btnCellRenderer";        
@@ -62,7 +63,8 @@ export class GridComponent implements OnInit {
 
   onGridReady(params:GridReadyEvent) {
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;    
+    this.gridColumnApi = params.columnApi; 
+    if(this.autoSizeCol)  
     this.autoSizeAll(this.autoSizeCol)
     if(this.sizeColumnsToFit)
     this.gridApi.sizeColumnsToFit();

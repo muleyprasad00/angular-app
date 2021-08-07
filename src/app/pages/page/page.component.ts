@@ -50,8 +50,8 @@ export class PageComponent implements OnInit {
 
   fetchData(apiUrl:string,title:string){
     this.spinner.show();
-    this.http.get(`/api/${apiUrl}`).subscribe((res:any)=>{
-      this.rowData[title] = res.result;    
+    this.http.get(`${apiUrl}?sort=desc`).subscribe((res:any)=>{
+      this.rowData[title] = res;    
       this.spinner.hide();
     })
   }

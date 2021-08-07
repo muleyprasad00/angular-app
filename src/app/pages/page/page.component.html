@@ -12,6 +12,8 @@
                     [i18n]="i18n" 
                     [title]="element?.title" 
                     [gridButtons]="element.gridButtons"
+                    [autoSizeCol]="element.autoSizeCol"
+                    [sizeColumnsToFit]="element.sizeColumnsToFit"
                     [columns]="element.columns"
                     (GridReady)="fetchData(element.apiUrl,element?.title)"
                     [rowData]="rowData[element?.title]"
