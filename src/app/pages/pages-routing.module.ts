@@ -9,7 +9,7 @@ const routes: Routes = [
 			import('./page/page.module').then(m => m.PageModule),
 	},
 	{
-		path: 'add-edit/:name',
+		path: 'add-edit/:name/:id',
 		loadChildren: () =>
 			import('./add-edit-form/add-edit-form.module').then(m => m.AddEditFormModule),
 	},
