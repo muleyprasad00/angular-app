@@ -5,7 +5,9 @@ export interface Columns {
     type?:string;
     buttonDetails?:{
         btnText:string;
-        btnClass:string
+        btnClass:string;
+        action:string;
+        url:string;
     }
     cellRenderer?:string;
     cellRendererParams?:{}

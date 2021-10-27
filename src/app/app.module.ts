@@ -8,6 +8,18 @@ import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+
+export function createApollo(httpLink: HttpLink) {
+  return {
+    link: httpLink.create({uri: 'http://localhost:4000/graphql'}),
+    cache: new InMemoryCache(),
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,9 +31,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     ComponentsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,     
+    HttpLinkModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [HttpLink],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

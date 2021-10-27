@@ -20,7 +20,7 @@ export class DynamicFormComponent implements OnInit {
       if(element.element_type==='checkbox' && element.requiredTrue){
         group[element.name] = new FormControl(false,  Validators.requiredTrue);
       }else{
-        group[element.name] = new FormControl('');
+        group[element.name] = new FormControl(element.value||'');
       }      
     })
     this.myFormGroup = new FormGroup(group);
@@ -37,7 +37,6 @@ export class DynamicFormComponent implements OnInit {
     if (this.myFormGroup.invalid) {
       return;
   }
-    console.log(JSON.stringify(this.myFormGroup.value))
     this.OnSubmit.emit(this.myFormGroup.value)
   }
 

@@ -50,8 +50,12 @@ export class GridComponent implements OnInit {
         colObj.cellRendererParams =  {
           btnText:col.buttonDetails?.btnText,
           btnClass:col.buttonDetails?.btnClass,
-          clicked: function(field: any) {
-            alert(`${field} was clicked`);
+          clicked: (id:any)=>{
+            this.onGridBtnClick(
+              {
+                action: col.buttonDetails?.action, url: col.buttonDetails?.url, id
+              }
+            )
           }
         }
       }
@@ -81,6 +85,7 @@ export class GridComponent implements OnInit {
 
 
   onGridBtnClick(event:any){
+    console.log(event)
     this.GridBtnClickEvent.emit(event)
   }
 
