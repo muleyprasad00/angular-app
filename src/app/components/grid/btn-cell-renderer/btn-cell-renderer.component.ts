@@ -7,7 +7,7 @@ import { ICellRendererParams } from 'ag-grid-community';
   templateUrl: './btn-cell-renderer.component.html',
   styleUrls: ['./btn-cell-renderer.component.css']
 })
-export class BtnCellRendererComponent implements ICellRendererAngularComp , OnInit {
+export class BtnCellRendererComponent implements OnInit {
   private params: any;
   btnText:string = '';
   btnClass:string = ''
@@ -21,9 +21,6 @@ export class BtnCellRendererComponent implements ICellRendererAngularComp , OnIn
     this.params.clicked(this.params.data.id);
   }
   constructor() { }
-  refresh(params: ICellRendererParams): boolean {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit(): void {
   }

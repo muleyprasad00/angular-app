@@ -22,7 +22,7 @@ export class GridComponent implements OnInit {
   @Input() title :string = ''
   @Input() i18n:any;
   @Output() GridBtnClickEvent = new EventEmitter<boolean>();
-  @Output() GridReady = new EventEmitter<boolean>();
+  @Output() GridReady = new EventEmitter<any>();
   
   @Input() defaultColDef = {
     resizable: true
@@ -38,7 +38,6 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.columns.forEach(col => {
       const colObj:Columns = {
         field:col.field,
@@ -53,7 +52,7 @@ export class GridComponent implements OnInit {
           clicked: (id:any)=>{
             this.onGridBtnClick(
               {
-                action: col.buttonDetails?.action, url: col.buttonDetails?.url, id
+                action: col.buttonDetails?.action, url: col.buttonDetails?.url, id , title:this.title
               }
             )
           }
@@ -65,14 +64,14 @@ export class GridComponent implements OnInit {
 
   
 
-  onGridReady(params:GridReadyEvent) {
+  onGridReady(params:GridReadyEvent) {    
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi; 
     if(this.autoSizeCol)  
     this.autoSizeAll(this.autoSizeCol)
     if(this.sizeColumnsToFit)
     this.gridApi.sizeColumnsToFit();
-    this.GridReady.emit();
+    this.GridReady.emit({params});
   }
 
   autoSizeAll(skipHeader: any) {
@@ -85,7 +84,6 @@ export class GridComponent implements OnInit {
 
 
   onGridBtnClick(event:any){
-    console.log(event)
     this.GridBtnClickEvent.emit(event)
   }
 

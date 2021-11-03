@@ -15,7 +15,7 @@
                     [autoSizeCol]="element.autoSizeCol"
                     [sizeColumnsToFit]="element.sizeColumnsToFit"
                     [columns]="element.columns"
-                    (GridReady)="fetchData(element.queryConfig,element.columns,element?.title)"
+                    (GridReady)="fetchData($event,element.queryConfig,element.columns,element?.title)"
                     [rowData]="rowData[element?.title]"
                     (GridBtnClickEvent)="onGridBtnClickEvent($event)"
                 ></app-grid>
