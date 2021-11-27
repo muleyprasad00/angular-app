@@ -77,7 +77,7 @@ export class PageComponent implements OnInit {
 
   onGridBtnClickEvent(event: any) {
     if (event.action === "navigate") {
-      this.router.navigateByUrl(`/${event.url}/${this.pageName}/${event.id ? event.id : null}`)
+      this.router.navigateByUrl(`/page/${event.url}/${this.pageName}/${event.id ? event.id : null}`)
     } else if (event.action === "delete") {
       this.removeItemFromList(event);
     }
