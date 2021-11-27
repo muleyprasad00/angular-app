@@ -9,20 +9,31 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-
-export function createApollo(httpLink: HttpLink) {
-  return {
-    link: httpLink.create({uri: 'http://localhost:4000/graphql'}),
-    cache: new InMemoryCache(),
-  };
-}
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { AuthGuard } from './shared/auth-guard.service';
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all',
+  },
+  mutate: {
+    errorPolicy: 'all',
+  },
+};
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -31,13 +42,21 @@ export function createApollo(httpLink: HttpLink) {
     NgbModule,
     ComponentsModule,
     HttpClientModule,
-    NgxSpinnerModule,     
-    HttpLinkModule
+    NgxSpinnerModule,
   ],
   providers: [
+    AuthGuard,
     {
       provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:4000/graphql',
+          }),
+          defaultOptions
+        };
+      },
       deps: [HttpLink],
     }
   ],

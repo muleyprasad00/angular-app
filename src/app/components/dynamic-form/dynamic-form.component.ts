@@ -10,7 +10,12 @@ export class DynamicFormComponent implements OnInit {
   myFormGroup:any;
   registerForm: any;
   submitted = false;
-  @Input() formTemplate:any = []
+  @Input() formTemplate:any = [];
+  @Input() cardHeader:any  
+  @Input() showCancel = true;
+  @Input() submitButtonText = 'Submit';
+
+
   @Output() OnSubmit : EventEmitter<any> = new EventEmitter();
 
   constructor() {}    

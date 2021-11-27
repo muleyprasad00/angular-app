@@ -16,6 +16,7 @@ export class AddEditFormComponent implements OnInit {
   breadcrumbList = ['Home', '', 'Update'];
   i18n: any;
   formsConfig: any;
+  queryConfig:any;
   userConfigSub$!: Subscription;
   pageName: string = '';
   id: string = '';
@@ -47,7 +48,8 @@ export class AddEditFormComponent implements OnInit {
 
   fetchData() {
     this.http.get(`/config/formsConfig.json`).subscribe((res: any) => {
-      this.formsConfig = res[this.pageName].formsConfig;      
+      this.formsConfig = res[this.pageName].formsConfig;
+      this.queryConfig = res[this.pageName].queryConfig;   
       this.spinner.hide();
       if (this.id !== 'null') {
         this.fetchDataByID(res[this.pageName].queryConfig,);
@@ -62,24 +64,28 @@ export class AddEditFormComponent implements OnInit {
     const query = gql`
       query  ${queryConfig.queryName}($queryInput:QueryInput){
         ${queryConfig.queryName}(queryInput:$queryInput){
-          ${requireColumns.toString()}
+         data
         }
     }
     `;
-    const variables = {
-      ...{ ...queryConfig.variables }
+    const reqConfig = queryConfig.variables;
+    reqConfig.columns = requireColumns;
+    reqConfig.id = this.id;
+    const variables:any = {
+      queryInput:{...reqConfig}
     }
-    variables.queryInput.id = this.id;
     this.query = this.apollo.watchQuery({
       query,
       variables
     });
+
     this.query.valueChanges.subscribe(result => {
-      if (result.data && result.data[queryConfig.queryName]) {
-        for (let item in result.data[queryConfig.queryName]) {
+      if(result.data && result.data[queryConfig.queryName]){
+        const rowData = JSON.parse(result.data[queryConfig.queryName].data);       
+        for (let item in rowData[0]) {
           this.formsConfig?.forEach((element: any) => {
             if (item === element.name) {
-              element.value = result.data[queryConfig.queryName][item]
+              element.value = rowData[0][item]
             }
           });
         }
@@ -91,18 +97,75 @@ export class AddEditFormComponent implements OnInit {
 
   onSubmit(event: any) {
     this.spinner.show();
-    if (this.id === 'null') {
-      this.http.post(`/api/${this.pageName}`, event).subscribe(res => {
-        this.spinner.hide();
-        window.history.back();
-      })
-    }else{
-      this.http.put(`/api/${this.pageName}/${this.id}`, event).subscribe(res => {
-        this.spinner.hide();
-        window.history.back();
-      })
+    const queryConfig = {
+      queryName: this.id !== 'null' ?'updateData':'createData'
     }
-    
+    this.mutate(event,queryConfig)
+  }
+  insert(event:any) {
+    const queryConfig = {
+      queryName: 'createData'
+    }
+    const query = gql`
+    mutation  ${queryConfig.queryName}($queryInput:QueryInput){
+        ${queryConfig.queryName}(queryInput:$queryInput){
+          data
+        }
+    }
+    `;
+    const reqConfig = {
+      datatable:  this.queryConfig?.variables?.datatable,
+      data: JSON.stringify(event)
+    };
+
+    const variables: any = {
+      queryInput: { ...reqConfig }
+    }
+    this.apollo.mutate({
+      mutation: query,
+      variables
+    }).subscribe(({ data }) => {
+      this.spinner.hide();
+      window.history.back();
+    },(error) => {
+      this.spinner.hide();
+      console.log('there was an error sending the query', error);
+    });
+  }
+
+  update(event:any){
+  }
+
+
+  mutate(event:any,queryConfig:any){
+    const query = gql`
+    mutation  ${queryConfig.queryName}($queryInput:QueryInput){
+        ${queryConfig.queryName}(queryInput:$queryInput){
+          data
+        }
+    }
+    `;
+    const reqConfig:any = {
+      datatable:  this.queryConfig?.variables?.datatable,
+      data: JSON.stringify(event),
+      id:this.id
+    };
+    if(this.id === 'null'){
+      delete reqConfig.id
+    }
+    const variables: any = {
+      queryInput: { ...reqConfig }
+    }
+    this.apollo.mutate({
+      mutation: query,
+      variables
+    }).subscribe(({ data }) => {
+      this.spinner.hide();
+      window.history.back();
+    },(error) => {
+      this.spinner.hide();
+      console.log('there was an error sending the query', error);
+    });
   }
 
 }
