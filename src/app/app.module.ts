@@ -12,6 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { AuthGuard } from './shared/auth-guard.service';
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'cache-and-network',
@@ -28,7 +31,9 @@ const defaultOptions = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +45,7 @@ const defaultOptions = {
     NgxSpinnerModule,
   ],
   providers: [
+    AuthGuard,
     {
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {

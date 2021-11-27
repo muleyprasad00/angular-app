@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.userConfigSub = this.userService.userCast.subscribe((userDetails: any) => {
       if (userDetails.appName) {
-        this.userConfigSub.unsubscribe();
+        this.userConfigSub?.unsubscribe();
         this.i18n = userDetails.i18n[0].translations;
         this.sidebar = userDetails.sidebarConfig;
       }

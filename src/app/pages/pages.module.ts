@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
-
+import { PagesComponent } from './pages.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
-  declarations: [
+  declarations: [  
+    PagesComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     PagesRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    NgxSpinnerModule
   ]
 })
 export class PagesModule { }

@@ -59,5 +59,21 @@ export class MasterService {
     return this.apollo.mutate({ mutation: query, variables })
   }
 
+  login(email:string,password:string){
+    const query = gql`
+    mutation  login($queryInput:LoginInput){
+      login(queryInput:$queryInput){
+        token,
+        name,
+        id
+        email
+        }
+    } `;
+    const variables: any = {
+      queryInput: { email,password }
+    }
+    return this.apollo.mutate({ mutation: query, variables })
+  }
+
 
 }

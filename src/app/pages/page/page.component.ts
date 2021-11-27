@@ -70,16 +70,7 @@ export class PageComponent implements OnInit {
     });
     this.masterService.get(queryConfig, requireColumns).subscribe(result => {
       if (result.data && result.data[queryConfig.queryName]) {
-        const data = JSON.parse(result.data[queryConfig.queryName].data);
-        this.rowData[title] = []
-        for (let item in data) {
-          data[item].forEach((row: any, index: any) => {
-            if (!this.rowData[title][index]) {
-              this.rowData[title][index] = {};
-            }
-            this.rowData[title][index][item] = row;
-          });
-        }
+        this.rowData[title] = JSON.parse(result.data[queryConfig.queryName].data);
       }
     });
   }

@@ -81,16 +81,7 @@ export class AddEditFormComponent implements OnInit {
 
     this.query.valueChanges.subscribe(result => {
       if(result.data && result.data[queryConfig.queryName]){
-        const data = JSON.parse(result.data[queryConfig.queryName].data);
-        const rowData:any = []
-        for(let item in data){
-          data[item].forEach((row:any,index:any) => {            
-            if(!rowData[index]){
-              rowData[index] = {};
-            }
-            rowData[index][item] = row;
-          });
-        }        
+        const rowData = JSON.parse(result.data[queryConfig.queryName].data);       
         for (let item in rowData[0]) {
           this.formsConfig?.forEach((element: any) => {
             if (item === element.name) {
